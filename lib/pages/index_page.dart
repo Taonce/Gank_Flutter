@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_shop/pages/home_page.dart';
-import 'package:flutter_shop/pages/cart_page.dart';
-import 'package:flutter_shop/pages/category_page.dart';
+import 'package:flutter_shop/pages/android_page.dart';
+import 'package:flutter_shop/pages/ios_page.dart';
 import 'package:flutter_shop/pages/member_page.dart';
 
 class IndexPage extends StatefulWidget {
@@ -10,30 +10,30 @@ class IndexPage extends StatefulWidget {
   State<StatefulWidget> createState() => _IndexPageState();
 }
 
-class _IndexPageState extends State {
+class _IndexPageState extends State with SingleTickerProviderStateMixin {
   final List<BottomNavigationBarItem> _bottomTabs = [
     BottomNavigationBarItem(
       icon: Icon(CupertinoIcons.home),
       title: Text('首页'),
     ),
     BottomNavigationBarItem(
-      icon: Icon(CupertinoIcons.search),
-      title: Text('分类'),
+      icon: Icon(Icons.android),
+      title: Text('Android'),
     ),
     BottomNavigationBarItem(
-      icon: Icon(CupertinoIcons.shopping_cart),
-      title: Text('购物车'),
+      icon: Icon(Icons.tablet_mac),
+      title: Text('iOS'),
     ),
     BottomNavigationBarItem(
       icon: Icon(CupertinoIcons.profile_circled),
-      title: Text('会员中心'),
+      title: Text('福利'),
     ),
   ];
 
   final List<Widget> _pages = [
     HomePage(),
-    CategoryPage(),
-    CartPage(),
+    AndroidPage(),
+    IosPage(),
     MemberPage(),
   ];
 
@@ -41,13 +41,17 @@ class _IndexPageState extends State {
 
   @override
   void initState() {
+    _index = 0;
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _pages[_index],
+      body: IndexedStack(
+        children: _pages,
+        index: _index,
+      ),
       bottomNavigationBar: BottomNavigationBar(
         elevation: 5.0,
         iconSize: 20.0,

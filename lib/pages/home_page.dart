@@ -1,50 +1,91 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_shop/widgets/home_banner_widget.dart';
-import 'package:flutter_shop/widgets/home_tab_widget.dart';
+import 'package:flutter_shop/entity/category.dart';
+import 'package:flutter_shop/service/service_methon.dart';
+import 'xiandu_page.dart';
 
 class HomePage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _HomePageState();
 }
 
-class _HomePageState extends State with AutomaticKeepAliveClientMixin {
-  final List<String> _urls = [
-    'https://wanandroid.com/blogimgs/4f66c08e-d8b6-470d-9c8c-eeed9dbfb2a3.png',
-    'https://www.wanandroid.com/blogimgs/62c1bd68-b5f3-4a3c-a649-7ca8c7dfabe6.png',
-    'https://www.wanandroid.com/blogimgs/90c6cc12-742e-4c9f-b318-b912f163b8d0.png',
-    'https://www.wanandroid.com/blogimgs/50c115c2-cf6c-4802-aa7b-a4334de444cd.png',
-  ];
+class _HomePageState extends State<HomePage>
+    with AutomaticKeepAliveClientMixin<HomePage>, SingleTickerProviderStateMixin<HomePage> {
+  List<CategoryResults> _category = List();
+  List<Widget> _title = List();
+  List<Widget> _pages = List();
+  TabController _tabController;
+  PageController _pageController;
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   // ignore: must_call_super
   Widget build(BuildContext context) {
-    ScreenUtil.instance = ScreenUtil(width: 750, height: 1334)..init(context);
-    return Scaffold(
-      body: Column(
-        children: <Widget>[
-          HomeBannerWidget(_urls),
-          Container(
-            height: ScreenUtil().setHeight(260),
-            width: ScreenUtil().setWidth(750),
-            child: GridView.count(
-              crossAxisCount: 5,
-              padding: const EdgeInsets.all(5.0),
-              children: <Widget>[
-                HomeTabWidget(),
-                HomeTabWidget(),
-                HomeTabWidget(),
-                HomeTabWidget(),
-                HomeTabWidget(),
-              ],
+    ScreenUtil.instance = ScreenUtil(width: 1080, height: 1920)..init(context);
+    return FutureBuilder(
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          if (_pageController == null) {
+            _pageController = PageController();
+          }
+          if (_tabController == null) {
+            _tabController = TabController(length: _pages.length, vsync: this);
+            _tabController.addListener(() {
+              if (_tabController.indexIsChanging) {
+                _pageController.animateToPage(
+                  _tabController.index,
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.decelerate,
+                );
+              }
+            });
+          }
+          return Scaffold(
+            appBar: AppBar(
+              title: Text('闲读'),
+              bottom: TabBar(
+                tabs: _title,
+                controller: _tabController,
+                isScrollable: true,
+              ),
             ),
-          )
-        ],
-      ),
+            body: PageView(
+              children: _pages,
+              controller: _pageController,
+              onPageChanged: (index) {
+                _tabController.index = index;
+              },
+            ),
+          );
+        } else {
+          return Center(
+            child: Text('分类加载中...'),
+          );
+        }
+      },
+      future: getCategory(),
     );
   }
 
   @override
-  // TODO: implement wantKeepAlive
   bool get wantKeepAlive => true;
+
+  Future getCategory() async {
+    Category category;
+    await getXianduCategory().then((data) {
+      category = Category.fromJsonMap(data);
+      _category.addAll(category.results);
+      _category.forEach((f) {
+        _title.add(Tab(
+          text: f.name,
+        ));
+        _pages.add(XianduPage(f.en_name));
+      });
+    });
+    return category;
+  }
 }
