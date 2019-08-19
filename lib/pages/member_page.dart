@@ -38,16 +38,17 @@ class _MemberPageState extends State with AutomaticKeepAliveClientMixin {
       height: 1920,
     )..init(context);
     return Scaffold(
-        body: Container(
-      width: ScreenUtil().setWidth(1080),
-      child: ListView.builder(
-        itemBuilder: (context, index) {
-          return MemberItemWidget(data: _data[index]);
-        },
-        itemCount: _data.length,
-        controller: _controller,
+      body: Container(
+        width: ScreenUtil().setWidth(1080),
+        child: ListView.builder(
+          itemBuilder: (context, index) {
+            return MemberItemWidget(data: _data[index]);
+          },
+          itemCount: _data.length,
+          controller: _controller,
+        ),
       ),
-    ));
+    );
   }
 
   void _refresh() {

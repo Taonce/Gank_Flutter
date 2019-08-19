@@ -66,14 +66,23 @@ class XianduState extends State<XianduPage>
 
   List<Widget> _encodeWidget() {
     _category.forEach((f) {
-      _categoryWidget.add(Container(
-        width: 30,
-        height: 30,
-        margin: const EdgeInsets.all(5),
-        child: CircleAvatar(
-          backgroundImage: NetworkImage(f.icon),
+      _categoryWidget.add(
+        Container(
+          width: 30,
+          height: 30,
+          margin: const EdgeInsets.all(5),
+          child: InkWell(
+            child: CircleAvatar(
+              backgroundImage: NetworkImage(f.icon),
+            ),
+            onTap: () {
+              setState(() {
+//                id = f.id;
+              });
+            },
+          ),
         ),
-      ));
+      );
     });
     return _categoryWidget;
   }

@@ -17,6 +17,7 @@ dependencies:
   flutter_swiper: ^1.1.6
   # add flutter_ScreenUtil
   flutter_screenutil: ^0.5.3
+  flutter_webview_plugin: ^0.3.7
 
 dev_dependencies:
   flutter_test:
