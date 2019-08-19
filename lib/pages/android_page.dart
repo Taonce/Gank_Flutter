@@ -34,10 +34,6 @@ class _AndroidState extends State with AutomaticKeepAliveClientMixin {
   @override
   // ignore: must_call_super
   Widget build(BuildContext context) {
-    ScreenUtil.instance = ScreenUtil.instance = ScreenUtil(
-      width: 1080,
-      height: 1920,
-    )..init(context);
     return Scaffold(
       appBar: AppBar(
         title: Text('Android'),

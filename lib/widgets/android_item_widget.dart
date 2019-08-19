@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import '../entity/android.dart';
 
 class AndroidItemWidget extends StatelessWidget {
@@ -9,10 +9,6 @@ class AndroidItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ScreenUtil.instance = ScreenUtil(
-      width: 1080,
-      height: 100,
-    )..init(context);
     return Card(
       elevation: 5,
       margin: const EdgeInsets.all(5),

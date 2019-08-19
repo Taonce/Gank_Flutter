@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_shop/entity/ios.dart';
 import 'package:flutter_shop/pages/webview_page.dart';
 
@@ -10,10 +9,6 @@ class IosItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ScreenUtil.instance = ScreenUtil(
-      width: 1080,
-      height: 100,
-    )..init(context);
     return GestureDetector(
       onTap: () {
         Navigator.push(

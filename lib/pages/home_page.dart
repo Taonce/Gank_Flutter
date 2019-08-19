@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_shop/entity/category.dart';
 import 'package:flutter_shop/service/service_methon.dart';
+
 import 'xiandu_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -27,10 +27,6 @@ class _HomePageState extends State<HomePage>
   @override
   // ignore: must_call_super
   Widget build(BuildContext context) {
-    ScreenUtil.instance = ScreenUtil(
-      width: 1080,
-      height: 1920,
-    )..init(context);
     return FutureBuilder(
       builder: (context, snapshot) {
         if (snapshot.hasData) {

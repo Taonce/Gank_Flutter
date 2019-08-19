@@ -10,10 +10,6 @@ class MemberItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ScreenUtil.instance = ScreenUtil(
-      width: 1080,
-      height: 1920,
-    )..init(context);
     return GestureDetector(
       child: Container(
         width: ScreenUtil().setWidth(1060),

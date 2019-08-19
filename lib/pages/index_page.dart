@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_shop/pages/home_page.dart';
 import 'package:flutter_shop/pages/android_page.dart';
 import 'package:flutter_shop/pages/ios_page.dart';
@@ -47,6 +48,10 @@ class _IndexPageState extends State with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    ScreenUtil.instance = ScreenUtil(
+      width: 1080,
+      height: 1920,
+    )..init(context);
     return Scaffold(
       body: IndexedStack(
         children: _pages,

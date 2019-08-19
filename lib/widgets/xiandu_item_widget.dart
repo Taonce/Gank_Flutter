@@ -9,10 +9,6 @@ class XianduItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ScreenUtil.instance = ScreenUtil(
-      width: 1080,
-      height: 100,
-    )..init(context);
     return Card(
       elevation: 5,
       margin: const EdgeInsets.all(5),

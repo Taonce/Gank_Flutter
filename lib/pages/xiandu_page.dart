@@ -28,10 +28,6 @@ class XianduState extends State<XianduPage>
   @override
   // ignore: must_call_super
   Widget build(BuildContext context) {
-    ScreenUtil.instance = ScreenUtil(
-      width: 1080,
-      height: 1920,
-    )..init(context);
     return Container(
       width: ScreenUtil().setWidth(1080),
       height: ScreenUtil().setHeight(1920),
