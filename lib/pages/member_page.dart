@@ -11,11 +11,12 @@ class MemberPage extends StatefulWidget {
 
 class _MemberPageState extends State with AutomaticKeepAliveClientMixin {
   int index = 0;
-  List<FemaleResults> _data = List();
+  List<FemaleResults> _data;
   ScrollController _controller;
 
   @override
   void initState() {
+    _data = List();
     _controller = ScrollController();
     _controller.addListener(() {
       var position = _controller.position;
@@ -25,6 +26,12 @@ class _MemberPageState extends State with AutomaticKeepAliveClientMixin {
     });
     _refresh();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   @override

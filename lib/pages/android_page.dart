@@ -12,12 +12,13 @@ class AndroidPage extends StatefulWidget {
 
 class _AndroidState extends State with AutomaticKeepAliveClientMixin {
   ScrollController _controller;
-  List<AndroidResults> androidData = List();
+  List<AndroidResults> androidData;
   int index = 1;
 
   @override
   void initState() {
     super.initState();
+    androidData = List();
     _controller = ScrollController();
     _controller.addListener(() {
       var position = _controller.position;
@@ -26,6 +27,12 @@ class _AndroidState extends State with AutomaticKeepAliveClientMixin {
       }
     });
     _refresh();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   @override

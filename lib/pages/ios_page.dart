@@ -11,11 +11,12 @@ class IosPage extends StatefulWidget {
 
 class _IosPagePageState extends State with AutomaticKeepAliveClientMixin {
   ScrollController _controller;
-  List<IosResults> androidData = List();
+  List<IosResults> androidData;
   int index = 1;
 
   @override
   void initState() {
+    androidData = List();
     _controller = ScrollController();
     _controller.addListener(() {
       var position = _controller.position;
@@ -25,6 +26,12 @@ class _IosPagePageState extends State with AutomaticKeepAliveClientMixin {
     });
     _refresh();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   @override

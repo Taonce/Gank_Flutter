@@ -18,7 +18,7 @@ class XianduWidget extends StatefulWidget {
 class XianduState extends State<XianduWidget> {
   final String id;
 
-  List<XianduResults> _data = List();
+  List<XianduResults> _data;
   int index = 1;
   ScrollController _controller;
 
@@ -26,6 +26,7 @@ class XianduState extends State<XianduWidget> {
 
   @override
   void initState() {
+    _data = List();
     _controller = ScrollController();
     _controller.addListener(() {
       var position = _controller.position;
