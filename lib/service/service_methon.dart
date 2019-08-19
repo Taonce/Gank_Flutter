@@ -82,7 +82,9 @@ Future getXianduCategorySec(String category) async {
 Future getXianduData(String id, int index) async {
   try {
     Response response;
-    response = await Dio().get(xianduData + "id/$id+count/10/page/${index.toString()}");
+    String url = xianduData + "id/$id/count/10/page/${index.toString()}";
+    print('闲读数据Url：$url');
+    response = await Dio().get(url);
     print('闲读数据：${response.data.toString()}');
     if (response.statusCode == 200) {
       return response.data;

@@ -10,7 +10,7 @@ class XianduWidget extends StatelessWidget {
   final String id;
 
   List<XianduResults> _data = List();
-  int index = 0;
+  int index = 1;
 
   XianduWidget(this.id);
 
