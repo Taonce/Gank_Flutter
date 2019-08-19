@@ -13,7 +13,8 @@ class XianduPage extends StatefulWidget {
   State<StatefulWidget> createState() => XianduState(category);
 }
 
-class XianduState extends State<XianduPage> with AutomaticKeepAliveClientMixin<XianduPage> {
+class XianduState extends State<XianduPage>
+    with AutomaticKeepAliveClientMixin<XianduPage> {
   final String category;
   List<CategorySecResults> _category = List();
   List<Widget> _categoryWidget = List();
@@ -27,36 +28,38 @@ class XianduState extends State<XianduPage> with AutomaticKeepAliveClientMixin<X
   @override
   // ignore: must_call_super
   Widget build(BuildContext context) {
-    ScreenUtil.instance = ScreenUtil()..init(context);
+    ScreenUtil.instance = ScreenUtil(
+      width: 1080,
+      height: 1920,
+    )..init(context);
     return Container(
       width: ScreenUtil().setWidth(1080),
-      child: Column(
-        children: <Widget>[
-          FutureBuilder(
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return Column(
-                  children: <Widget>[
-                    SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: _encodeWidget(),
-                      ),
-                    ),
-                    XianduWidget(id),
-                  ],
-                );
-              } else {
-                return Center(
-                  child: Text('正在加载闲读数据...'),
-                );
-              }
-            },
-            future: getSecCategory(),
-          )
-        ],
+      height: ScreenUtil().setHeight(1920),
+      child: FutureBuilder(
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: _encodeWidget(),
+                  ),
+                ),
+                XianduWidget(id),
+              ],
+            );
+          } else {
+            return Center(
+              child: Text('正在加载闲读数据...'),
+            );
+          }
+        },
+        future: getSecCategory(),
       ),
     );
   }

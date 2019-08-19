@@ -10,10 +10,12 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage>
-    with AutomaticKeepAliveClientMixin<HomePage>, SingleTickerProviderStateMixin<HomePage> {
+    with
+        AutomaticKeepAliveClientMixin<HomePage>,
+        SingleTickerProviderStateMixin<HomePage> {
   List<CategoryResults> _category = List();
-  List<Widget> _title = List();
-  List<Widget> _pages = List();
+  List<Tab> _title = List();
+  List<XianduPage> _pages = List();
   TabController _tabController;
   PageController _pageController;
 
@@ -25,7 +27,10 @@ class _HomePageState extends State<HomePage>
   @override
   // ignore: must_call_super
   Widget build(BuildContext context) {
-    ScreenUtil.instance = ScreenUtil(width: 1080, height: 1920)..init(context);
+    ScreenUtil.instance = ScreenUtil(
+      width: 1080,
+      height: 1920,
+    )..init(context);
     return FutureBuilder(
       builder: (context, snapshot) {
         if (snapshot.hasData) {
@@ -62,8 +67,13 @@ class _HomePageState extends State<HomePage>
             ),
           );
         } else {
-          return Center(
-            child: Text('分类加载中...'),
+          return Scaffold(
+            appBar: AppBar(
+              title: Text('闲读'),
+            ),
+            body: Center(
+              child: Text('分类加载中...'),
+            ),
           );
         }
       },
