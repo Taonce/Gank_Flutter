@@ -11,12 +11,11 @@ class MemberPage extends StatefulWidget {
 
 class _MemberPageState extends State with AutomaticKeepAliveClientMixin {
   int index = 0;
-  List<FemaleResults> _data;
+  List<FemaleResults> _data = [];
   ScrollController _controller;
 
   @override
   void initState() {
-    _data = List();
     _controller = ScrollController();
     _controller.addListener(() {
       var position = _controller.position;
@@ -43,16 +42,19 @@ class _MemberPageState extends State with AutomaticKeepAliveClientMixin {
     return Scaffold(
       body: Container(
         width: ScreenUtil().setWidth(1080),
-        child: ListView.builder(
-          itemBuilder: (context, index) {
-            return MemberItemWidget(data: _data[index]);
-          },
-          itemCount: _data.length,
-          controller: _controller,
-        ),
+        child: listWidget(),
       ),
     );
   }
+
+  // 列表
+  Widget listWidget() => ListView.builder(
+        itemBuilder: (context, index) {
+          return MemberItemWidget(data: _data[index]);
+        },
+        itemCount: _data.length,
+        controller: _controller,
+      );
 
   void _refresh() {
     getMeinvData(index++).then((data) {

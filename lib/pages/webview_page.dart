@@ -3,24 +3,20 @@ import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 
 class WebViewPage extends StatefulWidget {
   final String _url;
-  final String _title;
 
-  WebViewPage(this._url, this._title) : super();
+  WebViewPage(this._url) : super();
 
   @override
-  State<StatefulWidget> createState() => WebViewState(_url, _title);
+  State<StatefulWidget> createState() => WebViewState(_url);
 }
 
 class WebViewState extends State<WebViewPage> {
   final String _url;
-  final String _title;
-  FlutterWebviewPlugin _webviewPlugin;
 
-  WebViewState(this._url, this._title) : super();
+  WebViewState(this._url) : super();
 
   @override
   void initState() {
-    _webviewPlugin = FlutterWebviewPlugin();
     super.initState();
   }
 
@@ -28,9 +24,6 @@ class WebViewState extends State<WebViewPage> {
   Widget build(BuildContext context) {
     return WebviewScaffold(
       url: _url,
-      appBar: AppBar(
-        title: Text(_title),
-      ),
       withZoom: true,
       withLocalStorage: true,
       withJavascript: true,

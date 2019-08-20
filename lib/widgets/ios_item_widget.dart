@@ -14,10 +14,7 @@ class IosItemWidget extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) {
-            return WebViewPage(
-              results.url,
-              results.desc,
-            );
+            return WebViewPage(results.url);
           }),
         );
       },
@@ -28,45 +25,54 @@ class IosItemWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Container(
-              padding: const EdgeInsets.all(5),
-              child: Text(
-                results.desc,
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Colors.black,
-                ),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.all(5),
-              child: Text(
-                results.publishedAt,
-                style: TextStyle(
-                  fontSize: 12,
-                  color: Colors.grey,
-                ),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.all(5),
-              child: Text(
-                results.who,
-                style: TextStyle(
-                  fontSize: 12,
-                  color: Colors.pinkAccent,
-                ),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
+            titleWidget(),
+            timeWidget(),
+            authorWidget(),
           ],
         ),
       ),
     );
   }
+
+  // 标题行
+  Widget titleWidget() => Container(
+        padding: const EdgeInsets.all(5),
+        child: Text(
+          results.desc,
+          style: TextStyle(
+            fontSize: 14,
+            color: Colors.black,
+          ),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
+      );
+
+  // 时间行
+  Widget timeWidget() => Container(
+        padding: const EdgeInsets.all(5),
+        child: Text(
+          results.publishedAt,
+          style: TextStyle(
+            fontSize: 12,
+            color: Colors.grey,
+          ),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
+      );
+
+  // 作者行
+  Widget authorWidget() => Container(
+        padding: const EdgeInsets.all(5),
+        child: Text(
+          results.who,
+          style: TextStyle(
+            fontSize: 12,
+            color: Colors.pinkAccent,
+          ),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
+      );
 }

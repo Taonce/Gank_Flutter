@@ -43,11 +43,16 @@ class _IosPagePageState extends State with AutomaticKeepAliveClientMixin {
     return Scaffold(
       appBar: AppBar(
         title: Text('iOS'),
-        centerTitle: true,
       ),
       body: Container(
         width: ScreenUtil().setWidth(1080),
-        height: ScreenUtil().setHeight(1920),
+        child: listWidget(),
+      ),
+    );
+  }
+
+  // 带滚动条的列表
+  Widget listWidget() => Scrollbar(
         child: ListView.builder(
           itemBuilder: (context, index) {
             return IosItemWidget(results: androidData[index]);
@@ -55,10 +60,9 @@ class _IosPagePageState extends State with AutomaticKeepAliveClientMixin {
           itemCount: androidData.length,
           controller: _controller,
         ),
-      ),
-    );
-  }
+      );
 
+  // 上拉加载更多
   void _refresh() {
     getIosData(index++).then((data) {
       setState(() {

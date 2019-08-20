@@ -44,21 +44,23 @@ class _AndroidState extends State with AutomaticKeepAliveClientMixin {
     return Scaffold(
       appBar: AppBar(
         title: Text('Android'),
-        centerTitle: true,
       ),
       body: Container(
         width: ScreenUtil().setWidth(1080),
         height: ScreenUtil().setHeight(1920),
-        child: ListView.builder(
-          itemBuilder: (context, index) {
-            return AndroidItemWidget(results: androidData[index]);
-          },
-          itemCount: androidData.length,
-          controller: _controller,
-        ),
+        child: listWidget(),
       ),
     );
   }
+
+  // 带滚动条的列表
+  Widget listWidget() => ListView.builder(
+        itemBuilder: (context, index) {
+          return AndroidItemWidget(results: androidData[index]);
+        },
+        itemCount: androidData.length,
+        controller: _controller,
+      );
 
   void _refresh() {
     getAndroidData(index++).then((data) {
