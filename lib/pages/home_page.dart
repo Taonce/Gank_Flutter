@@ -15,9 +15,11 @@ class _HomePageState extends State<HomePage>
   List<Tab> _title = [];
   List<XianduPage> _pages = [];
   TabController _tabController;
+  Future _future;
 
   @override
   void initState() {
+    _future = getCategory();
     super.initState();
   }
 
@@ -30,24 +32,19 @@ class _HomePageState extends State<HomePage>
   @override
   // ignore: must_call_super
   Widget build(BuildContext context) {
-    // 每次页面进行跳转时，都会重新build，使用FutureBuilder的话会重复请求数据，造成数据重复问题，这里需要进行判读下是否请求过。
-    if (_pages.isNotEmpty) {
-      return haveDataScaffold();
-    } else {
-      return FutureBuilder(
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            if (_tabController == null) {
-              _tabController = TabController(length: _pages.length, vsync: this);
-            }
-            return haveDataScaffold();
-          } else {
-            return notHaveDataScaffold();
+    return FutureBuilder(
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          if (_tabController == null) {
+            _tabController = TabController(length: _pages.length, vsync: this);
           }
-        },
-        future: getCategory(),
-      );
-    }
+          return haveDataScaffold();
+        } else {
+          return notHaveDataScaffold();
+        }
+      },
+      future: _future,
+    );
   }
 
   Widget haveDataScaffold() => Scaffold(

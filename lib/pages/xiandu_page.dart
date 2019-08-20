@@ -18,6 +18,7 @@ class XianduState extends State<XianduPage> with AutomaticKeepAliveClientMixin<X
   List<CategorySecResults> _category = List();
   List<Widget> _categoryWidget = List();
   String id = '';
+  Future _future;
 
   XianduState(this.category);
 
@@ -26,6 +27,7 @@ class XianduState extends State<XianduPage> with AutomaticKeepAliveClientMixin<X
 
   @override
   void initState() {
+    _future = getSecCategory();
     super.initState();
   }
 
@@ -52,7 +54,7 @@ class XianduState extends State<XianduPage> with AutomaticKeepAliveClientMixin<X
             );
           }
         },
-        future: getSecCategory(),
+        future: _future,
       ),
     );
   }
