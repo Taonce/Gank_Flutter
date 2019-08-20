@@ -11,7 +11,7 @@ class IndexPage extends StatefulWidget {
   State<StatefulWidget> createState() => _IndexPageState();
 }
 
-class _IndexPageState extends State with SingleTickerProviderStateMixin {
+class _IndexPageState extends State with AutomaticKeepAliveClientMixin {
   final List<BottomNavigationBarItem> _bottomTabs = [
     BottomNavigationBarItem(
       icon: Icon(CupertinoIcons.home),
@@ -38,7 +38,7 @@ class _IndexPageState extends State with SingleTickerProviderStateMixin {
     MemberPage(),
   ];
 
-  int _index = 0;
+  int _index;
 
   @override
   void initState() {
@@ -47,6 +47,10 @@ class _IndexPageState extends State with SingleTickerProviderStateMixin {
   }
 
   @override
+  bool get wantKeepAlive => true;
+
+  @override
+  // ignore: must_call_super
   Widget build(BuildContext context) {
     ScreenUtil.instance = ScreenUtil(
       width: 1080,

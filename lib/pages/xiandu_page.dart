@@ -13,8 +13,7 @@ class XianduPage extends StatefulWidget {
   State<StatefulWidget> createState() => XianduState(category);
 }
 
-class XianduState extends State<XianduPage>
-    with AutomaticKeepAliveClientMixin<XianduPage> {
+class XianduState extends State<XianduPage> with AutomaticKeepAliveClientMixin<XianduPage> {
   final String category;
   List<CategorySecResults> _category = List();
   List<Widget> _categoryWidget = List();
@@ -26,32 +25,30 @@ class XianduState extends State<XianduPage>
   bool get wantKeepAlive => true;
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   // ignore: must_call_super
   Widget build(BuildContext context) {
     return Container(
       width: ScreenUtil().setWidth(1080),
       height: ScreenUtil().setHeight(1920),
       child: FutureBuilder(
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
+        builder: (context, data) {
+          if (data.hasData) {
             return Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: _encodeWidget(),
-                  ),
-                ),
+                secTypeWidget(),
                 XianduWidget(id),
               ],
             );
           } else {
             return Center(
-              child: Text('正在加载闲读数据...'),
+              child: Text('正在加载中...'),
             );
           }
         },
@@ -60,13 +57,23 @@ class XianduState extends State<XianduPage>
     );
   }
 
+  // 二级分类组件
+  Widget secTypeWidget() => SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: _encodeWidget(),
+        ),
+      );
+
   List<Widget> _encodeWidget() {
     _category.forEach((f) {
       _categoryWidget.add(
         Container(
-          width: 30,
-          height: 30,
-          margin: const EdgeInsets.all(5),
+          width: ScreenUtil().setWidth(60),
+          height: ScreenUtil().setHeight(60),
+          margin: const EdgeInsets.fromLTRB(10, 10, 10, 10),
           child: InkWell(
             child: CircleAvatar(
               backgroundImage: NetworkImage(f.icon),
@@ -84,6 +91,9 @@ class XianduState extends State<XianduPage>
   }
 
   Future getSecCategory() async {
+    if (_category.isNotEmpty) {
+      _category.clear();
+    }
     CategorySec categorySec;
     await getXianduCategorySec(category).then((data) {
       categorySec = CategorySec.fromJsonMap(data);

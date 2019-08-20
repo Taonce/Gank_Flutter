@@ -42,7 +42,6 @@ class XianduState extends State<XianduWidget> {
       child: Container(
         width: ScreenUtil().setWidth(1080),
         height: ScreenUtil().setHeight(1920),
-        margin: const EdgeInsets.only(top: 10),
         child: ListView.builder(
           itemBuilder: (context, index) {
             return XianduItemWidget(

@@ -10,94 +10,77 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage>
-    with
-        AutomaticKeepAliveClientMixin<HomePage>,
-        SingleTickerProviderStateMixin<HomePage> {
-  List<CategoryResults> _category;
-  List<Tab> _title;
-  List<XianduPage> _pages;
-
+    with AutomaticKeepAliveClientMixin<HomePage>, SingleTickerProviderStateMixin<HomePage> {
+  List<CategoryResults> _category = [];
+  List<Tab> _title = [];
+  List<XianduPage> _pages = [];
   TabController _tabController;
-  PageController _pageController;
 
   @override
   void initState() {
-    _category = List<CategoryResults>();
-    _title = List<Tab>();
-    _pages = List();
     super.initState();
   }
 
   @override
   void dispose() {
     _tabController.dispose();
-    _pageController.dispose();
-    _category.clear();
-    _title.clear();
-    _pages.clear();
     super.dispose();
   }
 
   @override
   // ignore: must_call_super
   Widget build(BuildContext context) {
-    return Center(
-      child: Text('Home'),
-    );
-//    return FutureBuilder(
-//      builder: (context, snapshot) {
-//        if (snapshot.hasData) {
-//          if (_pageController == null) {
-//            _pageController = PageController();
-//          }
-//          if (_tabController == null) {
-//            _tabController = TabController(length: _pages.length, vsync: this);
-//            _tabController.addListener(() {
-//              if (_tabController.indexIsChanging) {
-//                _pageController.animateToPage(
-//                  _tabController.index,
-//                  duration: const Duration(milliseconds: 300),
-//                  curve: Curves.decelerate,
-//                );
-//              }
-//            });
-//          }
-//          return Scaffold(
-//            appBar: AppBar(
-//              title: Text('闲读'),
-//              bottom: TabBar(
-//                tabs: _title,
-//                controller: _tabController,
-//                isScrollable: true,
-//              ),
-//            ),
-//            body: PageView(
-//              children: _pages,
-//              controller: _pageController,
-//              onPageChanged: (index) {
-//                _tabController.index = index;
-//              },
-//            ),
-//          );
-//        } else {
-//          return Scaffold(
-//            appBar: AppBar(
-//              title: Text('闲读'),
-//            ),
-//            body: Center(
-//              child: Text('分类加载中...'),
-//            ),
-//          );
-//        }
-//      },
-//      future: getCategory(),
-//    );
+    // 每次页面进行跳转时，都会重新build，使用FutureBuilder的话会重复请求数据，造成数据重复问题，这里需要进行判读下是否请求过。
+    if (_pages.isNotEmpty) {
+      return haveDataScaffold();
+    } else {
+      return FutureBuilder(
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            if (_tabController == null) {
+              _tabController = TabController(length: _pages.length, vsync: this);
+            }
+            return haveDataScaffold();
+          } else {
+            return notHaveDataScaffold();
+          }
+        },
+        future: getCategory(),
+      );
+    }
   }
+
+  Widget haveDataScaffold() => Scaffold(
+        appBar: AppBar(
+          title: Text('闲读'),
+          bottom: TabBar(
+            tabs: _title,
+            controller: _tabController,
+            isScrollable: true,
+          ),
+        ),
+        body: TabBarView(
+          children: _pages,
+          controller: _tabController,
+        ),
+      );
+
+  Widget notHaveDataScaffold() => Scaffold(
+        appBar: AppBar(
+          title: Text('闲读'),
+        ),
+        body: Center(
+          child: Text('分类加载中...'),
+        ),
+      );
 
   @override
   bool get wantKeepAlive => true;
 
   Future getCategory() async {
+    if (_category.isNotEmpty) {
+      _category.clear();
+    }
     Category category;
     await getXianduCategory().then((data) {
       category = Category.fromJsonMap(data);
