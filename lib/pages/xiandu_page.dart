@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_shop/service/service_methon.dart';
+import 'package:flutter_shop/util/event_bus.dart';
 import 'package:flutter_shop/widgets/xiandu_list_widget.dart';
 import '../entity/category_sec.dart';
 
@@ -13,7 +14,8 @@ class XianduPage extends StatefulWidget {
   State<StatefulWidget> createState() => XianduState(category);
 }
 
-class XianduState extends State<XianduPage> with AutomaticKeepAliveClientMixin<XianduPage> {
+class XianduState extends State<XianduPage>
+    with AutomaticKeepAliveClientMixin<XianduPage> {
   final String category;
   List<CategorySecResults> _category = List();
   List<Widget> _categoryWidget = List();
@@ -76,14 +78,17 @@ class XianduState extends State<XianduPage> with AutomaticKeepAliveClientMixin<X
           width: ScreenUtil().setWidth(60),
           height: ScreenUtil().setHeight(60),
           margin: const EdgeInsets.fromLTRB(10, 10, 10, 10),
-          child: InkWell(
+          child: GestureDetector(
             child: CircleAvatar(
               backgroundImage: NetworkImage(f.icon),
             ),
             onTap: () {
-              setState(() {
-//                id = f.id;
-              });
+              if (f.id == id) {
+                return;
+              } else {
+                id = f.id;
+                bus.emit('xianduId', f.id);
+              }
             },
           ),
         ),

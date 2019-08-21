@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_shop/util/event_bus.dart';
 import '../entity/xiandu.dart';
 import '../service/service_methon.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -20,19 +21,22 @@ class XianduState extends State<XianduWidget> {
   List<XianduResults> _data = [];
   int index = 1;
   ScrollController _controller;
+  String _id;
 
   XianduState(this.id);
 
   @override
   void initState() {
+    _id = id;
     _controller = ScrollController();
     _controller.addListener(() {
       var position = _controller.position;
       if (position.maxScrollExtent - position.pixels < 50) {
-        getXiandu(id);
+        getXiandu(_id);
       }
     });
-    getXiandu(id);
+    getXiandu(_id);
+    change();
     super.initState();
   }
 
@@ -42,14 +46,16 @@ class XianduState extends State<XianduWidget> {
       child: Container(
         width: ScreenUtil().setWidth(1080),
         height: ScreenUtil().setHeight(1920),
-        child: ListView.builder(
-          itemBuilder: (context, index) {
-            return XianduItemWidget(
-              results: _data[index],
-            );
-          },
-          itemCount: _data.length,
-          controller: _controller,
+        child: Scrollbar(
+          child: ListView.builder(
+            itemBuilder: (context, index) {
+              return XianduItemWidget(
+                results: _data[index],
+              );
+            },
+            itemCount: _data.length,
+            controller: _controller,
+          ),
         ),
       ),
     );
@@ -61,6 +67,19 @@ class XianduState extends State<XianduWidget> {
       setState(() {
         _data.addAll(xiandu.results);
       });
+    });
+  }
+
+  void change() {
+    bus.on('xianduId', (arg) {
+      if (arg == _id) {
+        return;
+      } else {
+        _id = arg;
+        index = 1;
+        _data.clear();
+        getXiandu(_id);
+      }
     });
   }
 }

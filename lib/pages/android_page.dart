@@ -13,7 +13,7 @@ class AndroidPage extends StatefulWidget {
 class _AndroidState extends State with AutomaticKeepAliveClientMixin {
   ScrollController _controller;
   List<AndroidResults> androidData;
-  int index = 1;
+  int _index = 1;
 
   @override
   void initState() {
@@ -63,7 +63,7 @@ class _AndroidState extends State with AutomaticKeepAliveClientMixin {
       );
 
   void _refresh() {
-    getAndroidData(index++).then((data) {
+    getAndroidData(_index++).then((data) {
       setState(() {
         Android android = Android.fromJsonMap(data);
         androidData.addAll(android.results);

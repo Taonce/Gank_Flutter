@@ -10,7 +10,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage>
-    with AutomaticKeepAliveClientMixin<HomePage>, SingleTickerProviderStateMixin<HomePage> {
+    with
+        AutomaticKeepAliveClientMixin<HomePage>,
+        SingleTickerProviderStateMixin<HomePage> {
   List<CategoryResults> _category = [];
   List<Tab> _title = [];
   List<XianduPage> _pages = [];
