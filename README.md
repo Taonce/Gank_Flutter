@@ -26,6 +26,7 @@
 * [网络请求库Dio](https://github.com/flutterchina/dio)
 * [屏幕适配库ScreenUtil](https://github.com/OpenFlutter/flutter_ScreenUtil)
 * [网页显示库WebView](https://github.com/fluttercommunity/flutter_webview_plugin)
+* [下拉刷新、上拉加载库EasyRefresh](https://github.com/xuelongqy/flutter_easyrefresh)
 
 ## 关于我
 
