@@ -14,7 +14,7 @@ class IndexPage extends StatefulWidget {
 class _IndexPageState extends State with AutomaticKeepAliveClientMixin {
   final List<BottomNavigationBarItem> _bottomTabs = [
     BottomNavigationBarItem(
-      icon: Icon(CupertinoIcons.home),
+      icon: Icon(Icons.home),
       title: Text('首页'),
     ),
     BottomNavigationBarItem(
@@ -26,7 +26,7 @@ class _IndexPageState extends State with AutomaticKeepAliveClientMixin {
       title: Text('iOS'),
     ),
     BottomNavigationBarItem(
-      icon: Icon(CupertinoIcons.profile_circled),
+      icon: Icon(Icons.photo),
       title: Text('福利'),
     ),
   ];
