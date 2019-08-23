@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyrefresh/easy_refresh.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_shop/util/event_bus.dart';
+
 import '../entity/xiandu.dart';
 import '../service/service_methon.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'xiandu_item_widget.dart';
 
 class XianduWidget extends StatefulWidget {
@@ -20,7 +22,6 @@ class XianduState extends State<XianduWidget> {
 
   List<XianduResults> _data = [];
   int index = 1;
-  ScrollController _controller;
   String _id;
 
   XianduState(this.id);
@@ -28,13 +29,6 @@ class XianduState extends State<XianduWidget> {
   @override
   void initState() {
     _id = id;
-    _controller = ScrollController();
-    _controller.addListener(() {
-      var position = _controller.position;
-      if (position.maxScrollExtent - position.pixels < 50) {
-        getXiandu(_id);
-      }
-    });
     getXiandu(_id);
     change();
     super.initState();
@@ -47,14 +41,18 @@ class XianduState extends State<XianduWidget> {
         width: ScreenUtil().setWidth(1080),
         height: ScreenUtil().setHeight(1920),
         child: Scrollbar(
-          child: ListView.builder(
-            itemBuilder: (context, index) {
-              return XianduItemWidget(
-                results: _data[index],
-              );
+          child: EasyRefresh(
+            child: ListView.builder(
+              itemBuilder: (context, index) {
+                return XianduItemWidget(
+                  results: _data[index],
+                );
+              },
+              itemCount: _data.length,
+            ),
+            onLoad: () async {
+              getXiandu(_id);
             },
-            itemCount: _data.length,
-            controller: _controller,
           ),
         ),
       ),

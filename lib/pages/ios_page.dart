@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_shop/entity/ios.dart';
 import 'package:flutter_shop/service/service_methon.dart';
@@ -10,28 +11,14 @@ class IosPage extends StatefulWidget {
 }
 
 class _IosPagePageState extends State with AutomaticKeepAliveClientMixin {
-  ScrollController _controller;
   List<IosResults> androidData;
   int index = 1;
 
   @override
   void initState() {
     androidData = List();
-    _controller = ScrollController();
-    _controller.addListener(() {
-      var position = _controller.position;
-      if (position.maxScrollExtent - position.pixels < 50) {
-        _refresh();
-      }
-    });
     _refresh();
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
   }
 
   @override
@@ -46,20 +33,22 @@ class _IosPagePageState extends State with AutomaticKeepAliveClientMixin {
       ),
       body: Container(
         width: ScreenUtil().setWidth(1080),
-        child: listWidget(),
+        child: EasyRefresh(
+          child: listWidget(),
+          onLoad: () async {
+            _refresh();
+          },
+        ),
       ),
     );
   }
 
   // 带滚动条的列表
-  Widget listWidget() => Scrollbar(
-        child: ListView.builder(
-          itemBuilder: (context, index) {
-            return IosItemWidget(results: androidData[index]);
-          },
-          itemCount: androidData.length,
-          controller: _controller,
-        ),
+  Widget listWidget() => ListView.builder(
+        itemBuilder: (context, index) {
+          return IosItemWidget(results: androidData[index]);
+        },
+        itemCount: androidData.length,
       );
 
   // 上拉加载更多

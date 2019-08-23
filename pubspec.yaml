@@ -18,6 +18,7 @@ dependencies:
   # add flutter_ScreenUtil
   flutter_screenutil: ^0.5.3
   flutter_webview_plugin: ^0.3.7
+  flutter_easyrefresh: ^2.0.3
 
 dev_dependencies:
   flutter_test:

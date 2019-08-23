@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_shop/entity/android.dart';
 import 'package:flutter_shop/service/service_methon.dart';
@@ -11,7 +12,6 @@ class AndroidPage extends StatefulWidget {
 }
 
 class _AndroidState extends State with AutomaticKeepAliveClientMixin {
-  ScrollController _controller;
   List<AndroidResults> androidData;
   int _index = 1;
 
@@ -19,20 +19,7 @@ class _AndroidState extends State with AutomaticKeepAliveClientMixin {
   void initState() {
     super.initState();
     androidData = List();
-    _controller = ScrollController();
-    _controller.addListener(() {
-      var position = _controller.position;
-      if (position.maxScrollExtent - position.pixels < 50) {
-        _refresh();
-      }
-    });
     _refresh();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
   }
 
   @override
@@ -48,7 +35,12 @@ class _AndroidState extends State with AutomaticKeepAliveClientMixin {
       body: Container(
         width: ScreenUtil().setWidth(1080),
         height: ScreenUtil().setHeight(1920),
-        child: listWidget(),
+        child: EasyRefresh(
+          child: listWidget(),
+          onLoad: () async {
+            _refresh();
+          },
+        ),
       ),
     );
   }
@@ -59,7 +51,6 @@ class _AndroidState extends State with AutomaticKeepAliveClientMixin {
           return AndroidItemWidget(results: androidData[index]);
         },
         itemCount: androidData.length,
-        controller: _controller,
       );
 
   void _refresh() {
