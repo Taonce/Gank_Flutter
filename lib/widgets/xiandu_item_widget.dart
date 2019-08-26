@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_shop/entity/xiandu.dart';
+import 'package:flutter_shop/pages/google_webview_page.dart';
 import 'package:flutter_shop/pages/webview_page.dart';
 
 class XianduItemWidget extends StatelessWidget {
@@ -62,7 +62,8 @@ class XianduItemWidget extends StatelessWidget {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) {
-        return WebViewPage(results.url);
+//            return WebViewPage(results.url);
+        return GoogleWebViewPage(results.url, results.title);
       }),
     );
   }

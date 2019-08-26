@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_shop/entity/ios.dart';
+import 'package:flutter_shop/pages/google_webview_page.dart';
 import 'package:flutter_shop/pages/webview_page.dart';
 
 class IosItemWidget extends StatelessWidget {
@@ -14,7 +15,8 @@ class IosItemWidget extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) {
-            return WebViewPage(results.url);
+//            return WebViewPage(results.url);
+            return GoogleWebViewPage(results.url, results.desc);
           }),
         );
       },
