@@ -14,20 +14,52 @@ class IndexPage extends StatefulWidget {
 class _IndexPageState extends State with AutomaticKeepAliveClientMixin {
   final List<BottomNavigationBarItem> _bottomTabs = [
     BottomNavigationBarItem(
-      icon: Icon(Icons.home),
-      title: Text('首页'),
+      icon: Icon(
+        Icons.home,
+        color: Colors.pinkAccent,
+      ),
+      title: Text(
+        '首页',
+        style: TextStyle(
+          color: Colors.pinkAccent,
+        ),
+      ),
     ),
     BottomNavigationBarItem(
-      icon: Icon(Icons.android),
-      title: Text('Android'),
+      icon: Icon(
+        Icons.android,
+        color: Colors.pinkAccent,
+      ),
+      title: Text(
+        'Android',
+        style: TextStyle(
+          color: Colors.pinkAccent,
+        ),
+      ),
     ),
     BottomNavigationBarItem(
-      icon: Icon(Icons.tablet_mac),
-      title: Text('iOS'),
+      icon: Icon(
+        Icons.tablet_mac,
+        color: Colors.pinkAccent,
+      ),
+      title: Text(
+        'iOS',
+        style: TextStyle(
+          color: Colors.pinkAccent,
+        ),
+      ),
     ),
     BottomNavigationBarItem(
-      icon: Icon(Icons.photo),
-      title: Text('福利'),
+      icon: Icon(
+        Icons.photo,
+        color: Colors.pinkAccent,
+      ),
+      title: Text(
+        '福利',
+        style: TextStyle(
+          color: Colors.pinkAccent,
+        ),
+      ),
     ),
   ];
 
@@ -68,7 +100,7 @@ class _IndexPageState extends State with AutomaticKeepAliveClientMixin {
         unselectedFontSize: 10,
         items: _bottomTabs,
         currentIndex: _index,
-        type: BottomNavigationBarType.fixed,
+        type: BottomNavigationBarType.shifting,
         onTap: (index) {
           setState(() {
             _index = index;
